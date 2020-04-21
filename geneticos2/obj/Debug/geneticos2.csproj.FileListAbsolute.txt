@@ -1,0 +1,7 @@
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\bin\Debug\geneticos2.exe.config
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\bin\Debug\geneticos2.exe
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\bin\Debug\geneticos2.pdb
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\obj\Debug\geneticos2.csprojAssemblyReference.cache
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\obj\Debug\geneticos2.csproj.CoreCompileInputs.cache
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\obj\Debug\geneticos2.exe
+D:\joel\Desktop\Playground\C#\geneticos2\geneticos2\obj\Debug\geneticos2.pdb

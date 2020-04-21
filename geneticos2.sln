@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "geneticos2", "geneticos2\geneticos2.csproj", "{14AF5BF4-A731-4D6A-B314-CFF96DAAEA01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14AF5BF4-A731-4D6A-B314-CFF96DAAEA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14AF5BF4-A731-4D6A-B314-CFF96DAAEA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14AF5BF4-A731-4D6A-B314-CFF96DAAEA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14AF5BF4-A731-4D6A-B314-CFF96DAAEA01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E8B9551-3DC4-4D53-B051-792BF6DDEC72}
+	EndGlobalSection
+EndGlobal
