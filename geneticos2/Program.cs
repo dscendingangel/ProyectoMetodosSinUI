@@ -15,7 +15,7 @@ namespace geneticos2
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            int n = 1;
+            int n = 10;
 
             Circle[] circles = {
 
@@ -27,16 +27,20 @@ namespace geneticos2
             
             double error = 0.05;
 
-            int rounds = 10;
+            int rounds = 100;
             
-            Genetics.calculate(circles, error, n);    
+            var results = Genetics.calculate(circles, error, n, rounds, 50);    
 
+            for (int i = 0; i < results.Length; ++i){
+                Console.WriteLine(results[i].Item1);
+                Console.WriteLine(results[i].Item2);
+                Console.WriteLine(results[i].Item3);
+                Console.WriteLine(results[i].Item4);
+            }
 
             sw.Stop();
 
             Console.WriteLine("Elapsed={0}", sw.Elapsed);
-
-
 
             Console.ReadLine();
         }

@@ -126,32 +126,48 @@ namespace geneticos2.Classes
 
         public static char[] mutation(char[] chromosome)
         {
-            /// Generar un numero entre 0 y chr.len
-            /// si es 0 es 1, viceversa
+            int index = random.Next(0, chromosome.Length);
+            if (chromosome[index] == '1')
+            {
+                chromosome[index] = '0';
+                return chromosome;
+            }
+            chromosome[index] = '1';
 
-            ///
+            return chromosome;
         }
 
         public static char[] crossover(char[] parent1, char[] parent2)
         {
 
-            // Genera un numero entre 0 y parent.lengght
-            // Hacemos un nuevo hijo vacio
-            // Copiamos los primneros n de parent 1
-            // Copiamos los siguiente m de parent 2
-            // return 
+            int chromosome_size = parent1.Length;
+
+            char[] child = new char[chromosome_size];
+
+            int n = random.Next(0, chromosome_size);
+
+            for (int i = 0; i < n; ++i)
+                child[i] = parent1[i]; 
+
+            for (int i = n; i < chromosome_size; ++i)
+                child[i] = parent2[i];
+
+            return child;
 
 
         }
 
         // Metodo maestro - Geneticos chido
-        public static (double, double) calculate(Circle[] circles, double error, int n, int rounds)
+        public static (int, double, double, double)[] calculate(Circle[] circles, double error, int n, int rounds, int size)
         {
+
+            var answer = new (int, double, double, double)[rounds];
+
             Restriction.initializeZ(circles);
 
             var restrictions = Restriction.generate(circles, error);
             var limits = Limit.generate(restrictions, n);
-            var poblation = Genetics.generatePoblation(limits, restrictions, 100);
+            var poblation = Genetics.generatePoblation(limits, restrictions, size);
 
             for (int i = 0; i < rounds && i < 100; ++i){
                 var best = round(poblation, limits, restrictions);
@@ -162,16 +178,36 @@ namespace geneticos2.Classes
 
                 for (int k = j; k < poblation.Length; ++k){
 
-                    
+                    // if (random.Next(0, 2) == 0){
+                        while (true) {
+                            
+                            if (random.Next(0, 2) == 0){
+                                poblation[k] = mutation(best[random.Next(0, j)]);
+                            }
+                            else {
+                                poblation[k] = crossover(best[random.Next(0, j)], best[random.Next(0, j)]);
+                            }
 
+                            if (evaluate(poblation[k], limits, restrictions))
+                                break;
+                        }
+                    // }
+                    // else
+                    //     while (true) {
+                    //         poblation[k] = crossover(best[random.Next(0, j)], best[random.Next(0, j)]);
+                    //         if (evaluate(poblation[k], limits, restrictions))
+                    //             break;
+                    //     }
 
                 }
 
+                var values = Genetics.getMappedValues(poblation[0], limits);
+
+                answer[i] = (i, values[0], values[1], Restriction.z(values[0], values[1]));
+
             }
 
-
-
-            return (0, 0);
+            return answer;
         }
 
         // Ronda de Geneticos
@@ -184,7 +220,7 @@ namespace geneticos2.Classes
             for (int i = 0; i < z.Length; ++i){
 
                 var values = Genetics.getMappedValues(poblation[i], limits);
-                z[i] = Restriction.z(values[0], values[1]);
+                z[i] = -Restriction.z(values[0], values[1]);
                 sum += z[i];
                 
             }
