@@ -15,21 +15,21 @@ namespace geneticos2
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            int n = 10;
+            int n = 1;
 
             Circle[] circles = {
 
-                new Circle { X = 3.3, Y = 19.3, R = 9.765 },
-                new Circle { X = 24, Y = 8.8, R = 14.1702},
-                new Circle { X = 7.3, Y = 11.4, R = 2.5851},
+                new Circle { X = 3.3, Y = 11.2, R = 9.7 },
+                new Circle { X = 23.9, Y = 8.5, R = 14.17 },
+                new Circle { X = 7.3, Y = 18.95, R = 2.58},
 
             };
             
-            double error = 0.05;
-
-            int rounds = 100;
+            double error = 0.22;
+            int rounds = 50;
+            int size = 10000;
             
-            var results = Genetics.calculate(circles, error, n, rounds, 50);    
+            var results = Genetics.calculate(circles, error, n, rounds, size);    
 
             for (int i = 0; i < results.Length; ++i){
                 Console.WriteLine(results[i].Item1);

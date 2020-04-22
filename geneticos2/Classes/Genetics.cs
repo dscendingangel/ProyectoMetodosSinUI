@@ -8,6 +8,7 @@ namespace geneticos2.Classes
 {
     class Genetics
     {
+        static int limitOfExecution = 50000000, err;
         // Para numeros aleatorios
         static Random random = new Random();
 
@@ -98,7 +99,9 @@ namespace geneticos2.Classes
             char[] chromosome = null;
             bool stay = true;
             
-            while (stay) {
+            while (stay && err < limitOfExecution)
+            {
+                err++;
 
                 int n = 0;
                 for (int i = 0; i < limits.Length; ++i)
@@ -109,6 +112,9 @@ namespace geneticos2.Classes
                 stay = !evaluate(chromosome, limits, restrictions);
 
             }
+
+            if (err == limitOfExecution)
+                throw new StackOverflowException("Limite de iteraciones alcanzado.");
 
             return chromosome;
         }
@@ -160,6 +166,7 @@ namespace geneticos2.Classes
         // Metodo maestro - Geneticos chido
         public static (int, double, double, double)[] calculate(Circle[] circles, double error, int n, int rounds, int size)
         {
+            err = 0;
 
             var answer = new (int, double, double, double)[rounds];
 
@@ -178,32 +185,33 @@ namespace geneticos2.Classes
 
                 for (int k = j; k < poblation.Length; ++k){
 
-                    // if (random.Next(0, 2) == 0){
-                        while (true) {
-                            
-                            if (random.Next(0, 2) == 0){
-                                poblation[k] = mutation(best[random.Next(0, j)]);
-                            }
-                            else {
-                                poblation[k] = crossover(best[random.Next(0, j)], best[random.Next(0, j)]);
-                            }
+                    while (err < limitOfExecution) {
+                        err++;
 
-                            if (evaluate(poblation[k], limits, restrictions))
-                                break;
+                        if (random.Next(0, 2) == 0){
+                            poblation[k] = mutation(best[random.Next(0, j)]);
                         }
-                    // }
-                    // else
-                    //     while (true) {
-                    //         poblation[k] = crossover(best[random.Next(0, j)], best[random.Next(0, j)]);
-                    //         if (evaluate(poblation[k], limits, restrictions))
-                    //             break;
-                    //     }
+                        else {
+                            poblation[k] = crossover(best[random.Next(0, j)], best[random.Next(0, j)]);
+                        }
+
+                        if (evaluate(poblation[k], limits, restrictions))
+                            break;
+                    }
+
+                    if (err == limitOfExecution)
+                        throw new StackOverflowException("Limite de iteraciones alcanzado.");
 
                 }
 
                 var values = Genetics.getMappedValues(poblation[0], limits);
 
                 answer[i] = (i, values[0], values[1], Restriction.z(values[0], values[1]));
+
+                Console.WriteLine(answer[i].Item1);
+                Console.WriteLine(answer[i].Item2);
+                Console.WriteLine(answer[i].Item3);
+                Console.WriteLine(answer[i].Item4);
 
             }
 
