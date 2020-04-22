@@ -46,6 +46,7 @@
     <Compile Include="Classes\Circle.cs" />
     <Compile Include="Classes\Genetics.cs" />
     <Compile Include="Classes\Limit.cs" />
+    <Compile Include="Classes\PriorityQueue.cs" />
     <Compile Include="Classes\Restriction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

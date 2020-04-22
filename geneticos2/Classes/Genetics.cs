@@ -80,6 +80,19 @@ namespace geneticos2.Classes
             return mappedValues;
         }
 
+        // Evaluamos si un hijo es valido o no
+        static bool evaluate(char[] chromosome, Limit[] limits, Restriction[] restrictions)
+        {
+            var mappedValues = getMappedValues(chromosome, limits);
+
+            for (int i = 0; i < restrictions.Length; ++i)
+                if (!restrictions[i].condition(mappedValues[0], mappedValues[1]))
+                    return false;
+
+            return true;
+            
+        }
+
         public static char[] generateChromosome(Limit[] limits, Restriction[] restrictions)
         {
             char[] chromosome = null;
@@ -93,17 +106,7 @@ namespace geneticos2.Classes
 
                 chromosome = randomBits(n);
 
-                // Console.WriteLine(chromosome);
-
-                var mappedValues = getMappedValues(chromosome, limits);
-
-                stay = false;
-                for (int i = 0; i < restrictions.Length; ++i){
-                    if (!restrictions[i].condition(mappedValues[0], mappedValues[1])){
-                        stay = true;
-                        break;
-                    }
-                }
+                stay = !evaluate(chromosome, limits, restrictions);
 
             }
 
@@ -119,6 +122,94 @@ namespace geneticos2.Classes
                 poblation[i] = generateChromosome(limits, restrictions);
 
             return poblation;
+        }
+
+        public static char[] mutation(char[] chromosome)
+        {
+            /// Generar un numero entre 0 y chr.len
+            /// si es 0 es 1, viceversa
+
+            ///
+        }
+
+        public static char[] crossover(char[] parent1, char[] parent2)
+        {
+
+            // Genera un numero entre 0 y parent.lengght
+            // Hacemos un nuevo hijo vacio
+            // Copiamos los primneros n de parent 1
+            // Copiamos los siguiente m de parent 2
+            // return 
+
+
+        }
+
+        // Metodo maestro - Geneticos chido
+        public static (double, double) calculate(Circle[] circles, double error, int n, int rounds)
+        {
+            Restriction.initializeZ(circles);
+
+            var restrictions = Restriction.generate(circles, error);
+            var limits = Limit.generate(restrictions, n);
+            var poblation = Genetics.generatePoblation(limits, restrictions, 100);
+
+            for (int i = 0; i < rounds && i < 100; ++i){
+                var best = round(poblation, limits, restrictions);
+
+                int j;
+                for (j = 0; j < best.Length; ++j)
+                    poblation[j] = best[j];
+
+                for (int k = j; k < poblation.Length; ++k){
+
+                    
+
+
+                }
+
+            }
+
+
+
+            return (0, 0);
+        }
+
+        // Ronda de Geneticos
+        public static char[][] round(char[][] poblation, Limit[] limits, Restriction[] restrictions)
+        {
+
+            double sum = 0;
+
+            var z = new double[poblation.Length];
+            for (int i = 0; i < z.Length; ++i){
+
+                var values = Genetics.getMappedValues(poblation[i], limits);
+                z[i] = Restriction.z(values[0], values[1]);
+                sum += z[i];
+                
+            }
+
+            // Calcula el z porcentaje acumulado
+            var zpercentage = new double[poblation.Length];
+            var zacumulatePercentage = 0.0;
+            for (int i = 0; i < z.Length; ++i){
+                zpercentage[i] = z[i] / sum;
+                zacumulatePercentage += zpercentage[i];
+                zpercentage[i] = zacumulatePercentage;
+            }
+
+            var best = new PriorityQueue();
+            for (int i = 0; i < z.Length; ++i){
+                double r = random.NextDouble();
+                for (int j = 0; j < z.Length; ++j){
+                    if (r < zpercentage[j]){
+                        best.push(poblation[j], z[j]);
+                        break;
+                    }
+                }
+            }
+
+            return best.getOnlyValues();
         }
 
     }

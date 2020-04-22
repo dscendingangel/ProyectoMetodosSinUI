@@ -55,5 +55,17 @@ namespace geneticos2.Classes
         }
 
         public static double getAbsoluteError(double relativeError, int numOfRestrictions) => Math.Sqrt(z(0, 0)) * relativeError / numOfRestrictions;
+    
+        // Generar restricciones
+        public static Restriction[] generate(Circle[] circles, double error){
+            double absoluteError = Restriction.getAbsoluteError(error, circles.Length);
+
+            Restriction[] restrictions = new Restriction[circles.Length];
+            for (int i = 0; i < restrictions.Length; ++i)
+                restrictions[i] = new Restriction(circles[i], absoluteError);
+
+            return restrictions;
+        }
+    
     }
 }
