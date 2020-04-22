@@ -8,11 +8,13 @@ namespace geneticos2.Classes
 {
     class Genetics
     {
+        //Definimos el límite de tiempo
         static int limitOfExecution = 50000000, err;
         // Para numeros aleatorios
         static Random random = new Random();
 
         // Obtiene el numero de bits a utilizar de cierta variable
+        //Recibe limite superior e inferior y los bits de la variable, y los bits de presición
         public static int getMj(double a, double b, int n)
         {
             double r = (Math.Log(b - a) + Math.Log(10) * n) / Math.Log(2);
@@ -67,7 +69,7 @@ namespace geneticos2.Classes
             
             return r;
         }
-
+        //Obtiene los valorea de n variables dado el cromosoma y los limites correspodientes
         public static double[] getMappedValues(char[] chromosome, Limit[] limits)
         {
             double[] mappedValues = new double[limits.Length];
@@ -81,7 +83,7 @@ namespace geneticos2.Classes
             return mappedValues;
         }
 
-        // Evaluamos si un hijo es valido o no
+        // Evaluamos si un hijo es valido o no respceto a las restricciones
         static bool evaluate(char[] chromosome, Limit[] limits, Restriction[] restrictions)
         {
             var mappedValues = getMappedValues(chromosome, limits);
@@ -93,7 +95,9 @@ namespace geneticos2.Classes
             return true;
             
         }
-
+        
+        //Genera un cromosama valido, generando cromosomas al azar y comprobando que sean validos con evaluate
+        // hasta tener uno válido, devuelve este
         public static char[] generateChromosome(Limit[] limits, Restriction[] restrictions)
         {
             char[] chromosome = null;
@@ -101,8 +105,7 @@ namespace geneticos2.Classes
             
             while (stay && err < limitOfExecution)
             {
-                err++;
-
+                err++
                 int n = 0;
                 for (int i = 0; i < limits.Length; ++i)
                     n += limits[i].M;
@@ -119,7 +122,7 @@ namespace geneticos2.Classes
             return chromosome;
         }
 
-
+        // Genera población aleatoria válida de m longitud
         public static char[][] generatePoblation(Limit[] limits, Restriction[] restrictions, int m)
         {
             char[][] poblation = new char[m][];
@@ -129,7 +132,8 @@ namespace geneticos2.Classes
 
             return poblation;
         }
-
+        
+        //Función para hacer mutación a un cromosoma, se elige uno de los bits al azar y se altera este
         public static char[] mutation(char[] chromosome)
         {
             int index = random.Next(0, chromosome.Length);
@@ -142,7 +146,8 @@ namespace geneticos2.Classes
 
             return chromosome;
         }
-
+        
+        //Cruza de cromosomas, recibe los padres y retorna al la cruza de estos, eligiendo tambien la posición al azar
         public static char[] crossover(char[] parent1, char[] parent2)
         {
 
@@ -163,7 +168,7 @@ namespace geneticos2.Classes
 
         }
 
-        // Metodo maestro - Geneticos chido
+        // Metodo maestro, integra todo
         public static (int, double, double, double)[] calculate(Circle[] circles, double error, int n, int rounds, int size)
         {
             err = 0;
